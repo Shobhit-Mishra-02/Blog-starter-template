@@ -1,6 +1,7 @@
 import { HiMenuAlt3 } from "react-icons/hi";
-import { FiX } from "react-icons/fi";
+import { FiAward, FiX } from "react-icons/fi";
 import { useState } from "react";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setMenuStatus] = useState<boolean>(false);
@@ -10,13 +11,19 @@ const Navbar = () => {
 
       <div className="hidden sm:block">
         <div className="flex justify-between align-middle items-center px-4 py-2 lg:pt-6 xl:px-16 md:px-6">
-          <span className="text-2xl font-semibold lg:text-3xl xl:font-extrabold cursor-pointer hover:text-gray-800 md:font-bold">
-            The Blog.
-          </span>
+          <Link href={"/"}>
+            <a className="text-2xl font-semibold lg:text-3xl xl:font-extrabold cursor-pointer hover:text-gray-800 md:font-bold">
+              The Blog.
+            </a>
+          </Link>
 
           <div className="list-none text flex justify-center align-middle items-center space-x-6 lg:space-x-8 xl:space-x-12 xl:text-xl">
-            <li className="cursor-pointer hover:text-gray-600">Blogs</li>
-            <li className="cursor-pointer hover:text-gray-600">About me</li>
+            <Link href={"/blogs"}>
+              <a className="cursor-pointer hover:text-gray-600">Blogs</a>
+            </Link>
+            <Link href={"/about"}>
+              <a className="cursor-pointer hover:text-gray-600">About me</a>
+            </Link>
           </div>
         </div>
       </div>
@@ -43,9 +50,21 @@ const Navbar = () => {
             isOpen ? "-translate-y-0 " : "-translate-y-full"
           } w-full bg-white -z-10 transition-all ease-in-out duration-300`}
         >
-          <li className="px-2">Home</li>
-          <li className="px-2">Blogs</li>
-          <li className="px-2">About me</li>
+          <li className="px-2">
+            <Link href={"/"}>
+              <a>Home</a>
+            </Link>
+          </li>
+          <li className="px-2">
+            <Link href={"/blogs"}>
+              <a>Blogs</a>
+            </Link>
+          </li>
+          <li className="px-2">
+            <Link href={"/about"}>
+              <a>About me</a>
+            </Link>
+          </li>
         </div>
       </div>
     </nav>

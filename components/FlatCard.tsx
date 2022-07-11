@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const FlatCard = () => {
   return (
     <div className="pb-4 pt-4">
@@ -11,9 +13,11 @@ const FlatCard = () => {
       </p>
 
       <div className="pt-6 flex justify-center sm:justify-end">
-        <button className="text-xl text-white px-6 py-1 rounded-md bg-black">
-          Read more
-        </button>
+        <Link href={"/blog/12"}>
+          <a className="text-xl text-white px-6 py-1 rounded-md bg-black">
+            Read more
+          </a>
+        </Link>
       </div>
     </div>
   );
