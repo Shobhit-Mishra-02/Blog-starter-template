@@ -31,7 +31,11 @@ const Navbar = () => {
       {/* slider navbar */}
       <div className="relative z-20 sm:hidden">
         <div className="flex justify-between align-middle items-center px-2 pt-1 py-2 shadow-lg bg-white">
-          <h2 className="text-2xl font-semibold">The Blog.</h2>
+          <h2 className="text-2xl font-semibold">
+            <Link href={"/"}>
+              <a>The Blog.</a>
+            </Link>
+          </h2>
 
           <span>
             {isOpen ? (

@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       </Head>
 
       {/* main header  */}
-      <div className="pt-12 flex flex-wrap flex-row-reverse md:justify-evenly md:align-middle md:items-center">
+      <div className="pt-12 flex flex-wrap flex-row-reverse md:justify-evenly md:align-middle md:items-center md:px-6">
         <img
           className="md:max-w-sm lg:max-w-md xl:max-w-xl"
           src="/headerImg2.svg"
