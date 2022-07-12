@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
 import Link from "next/link";
+import NoResult from "../components/NoResult";
 
 const Home: NextPage = () => {
   return (
@@ -84,6 +85,9 @@ const Home: NextPage = () => {
           <Card />
           <Card />
         </div>
+        {/* <div>
+          <NoResult />
+        </div> */}
       </div>
     </div>
   );
