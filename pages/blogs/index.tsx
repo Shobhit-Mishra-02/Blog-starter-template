@@ -1,8 +1,9 @@
 import { BiSearch } from "react-icons/bi";
 import FlatCard from "../../components/FlatCard";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { NextPage } from "next";
 
-const Blogs = () => {
+const Blogs: NextPage = () => {
   return (
     <div>
       <div className="mt-20 flex justify-center align-middle items-center">

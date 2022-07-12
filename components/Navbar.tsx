@@ -1,9 +1,9 @@
-import { HiMenuAlt3 } from "react-icons/hi";
-import { FiAward, FiX } from "react-icons/fi";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { FiX } from "react-icons/fi";
+import { HiMenuAlt3 } from "react-icons/hi";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const [isOpen, setMenuStatus] = useState<boolean>(false);
   return (
     <nav>

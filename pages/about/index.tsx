@@ -1,6 +1,7 @@
+import { NextPage } from "next";
 import { FiFacebook, FiInstagram, FiGithub, FiTwitter } from "react-icons/fi";
 
-const About = () => {
+const About: NextPage = () => {
   return (
     <div className="w-full">
       {/* intro of the author  */}

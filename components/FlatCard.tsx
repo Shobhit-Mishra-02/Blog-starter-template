@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const FlatCard = () => {
+const FlatCard: React.FC = () => {
   return (
     <div className="pb-4 pt-4">
       <h4 className="text-sm text-gray-600">12 Jan, 2022</h4>

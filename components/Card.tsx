@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Card = () => {
+const Card: React.FC = () => {
   return (
     <div className="w-[320px] rounded-md shadow-lg m-2 border">
       <div className="w-full h-[300px] bg-gray-300 rounded-t-md"></div>

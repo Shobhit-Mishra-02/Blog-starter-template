@@ -1,4 +1,6 @@
-const Blog = () => {
+import { NextPage } from "next";
+
+const Blog: NextPage = () => {
   return (
     <div className="sm:flex sm:justify-center">
       <div className="divide-y-2 sm:max-w-md md:max-w-xl lg:max-w-3xl xl:max-w-5xl">
