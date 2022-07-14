@@ -1,19 +1,20 @@
 import Link from "next/link";
+import { getDate } from "../lib/utilities";
 
-const FlatCard: React.FC = () => {
+const FlatCard: React.FC<{
+  title: string;
+  date: string;
+  desc: string;
+  id: string;
+}> = ({ title, date, desc, id }) => {
   return (
     <div className="pb-4 pt-4">
-      <h4 className="text-sm text-gray-600">12 Jan, 2022</h4>
-      <h2 className="text-3xl lg:text-4xl">Blogs title</h2>
-      <p className="text-sm text-gray-500 pt-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla veniam
-        error culpa ipsa, porro voluptatem explicabo nobis placeat sit maxime
-        magnam praesentium modi. Sunt exercitationem optio magni eos nulla
-        dolorem?
-      </p>
+      <h4 className="text-sm text-gray-600">{getDate(date)}</h4>
+      <h2 className="text-3xl lg:text-4xl">{title}</h2>
+      <p className="text-sm text-gray-500 pt-4">{desc}</p>
 
       <div className="pt-6 flex justify-center sm:justify-end">
-        <Link href={"/blog/12"}>
+        <Link href={`/blog/${id}`}>
           <a className="text-xl text-white px-6 py-1 rounded-md bg-black">
             Read more
           </a>

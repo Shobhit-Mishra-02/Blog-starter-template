@@ -2,8 +2,16 @@ import { BiSearch } from "react-icons/bi";
 import FlatCard from "../../components/FlatCard";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { NextPage } from "next";
+import { sanityClient } from "../../lib/sanity";
 
-const Blogs: NextPage = () => {
+interface blog {
+  _id: string;
+  blogDesc: string;
+  date: string;
+  title: string;
+}
+
+const Blogs: NextPage<{ blogs: blog[] }> = ({ blogs }) => {
   return (
     <div>
       <div className="mt-20 flex justify-center align-middle items-center">
@@ -24,9 +32,15 @@ const Blogs: NextPage = () => {
 
         <div className="sm:flex sm:flex-col sm:justify-center sm:items-center sm:align-middle mb-24">
           <div className="mt-12 divide-y-2 sm:max-w-sm md:max-w-xl lg:max-w-3xl">
-            <FlatCard />
-            <FlatCard />
-            <FlatCard />
+            {blogs.map((blog) => (
+              <FlatCard
+                key={blog._id}
+                title={blog.title}
+                desc={blog.blogDesc}
+                date={blog.date}
+                id={blog._id}
+              />
+            ))}
           </div>
 
           <div className="flex justify-between align-middle items-center w-full sm:max-w-sm md:max-w-xl lg:max-w-3xl mt-14">
@@ -44,3 +58,18 @@ const Blogs: NextPage = () => {
 };
 
 export default Blogs;
+
+export const getStaticProps = async () => {
+  const queryForBlogs = `*[_type == 'blogPost']{
+    _id,
+    blogDesc,
+    date,
+    title,
+  }`;
+
+  const blogs: blog[] = await sanityClient.fetch(queryForBlogs);
+
+  return {
+    props: { blogs },
+  };
+};
