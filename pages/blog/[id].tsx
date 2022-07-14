@@ -1,35 +1,53 @@
-import { NextPage } from "next";
+/* eslint-disable @next/next/no-img-element */
+import { PortableText, PortableTextBlockComponent } from "@portabletext/react";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { ParsedUrlQuery } from "querystring";
+import { sanityClient, urlFor } from "../../lib/sanity";
+import { getDate } from "../../lib/utilities";
 
-const Blog: NextPage = () => {
+interface blogInterface {
+  author: {
+    authorName: string;
+  };
+  blogDesc: string;
+  content: object[];
+  date: string;
+  title: string;
+}
+
+const Blog: NextPage<{ blog: blogInterface }> = ({ blog }) => {
+  const sampleImageComp: PortableTextBlockComponent = ({ value, isInline }) => {
+    return (
+      // eslint-disable-next-line jsx-a11y/alt-text
+      <img src={urlFor(value).url()} />
+    );
+  };
+
+  const components = {
+    types: {
+      image: sampleImageComp,
+    },
+  };
   return (
     <div className="sm:flex sm:justify-center">
       <div className="divide-y-2 sm:max-w-md md:max-w-xl lg:max-w-3xl xl:max-w-5xl">
         <div className="mt-12 pb-4 sm:pt-12">
           <h2 className="text-3xl text-center sm:text-4xl md:pb-4">
-            Blog title
+            {blog.title}
           </h2>
           <div className="text-sm text-gray-600 flex justify-end">
-            <h4>12 Jun, 2022</h4>
+            <h4>{getDate(blog.date)}</h4>
           </div>
           <p className="text-gray-500 text-center pt-4 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ipsam
-            vitae cupiditate. Dignissimos at recusandae facilis numquam
-            architecto, cum laborum ipsam omnis distinctio hic ducimus officia
-            laboriosam consequuntur ratione corporis!
+            {blog.blogDesc}
           </p>
           <div className="text-sm text-gray-600 flex justify-end mt-2 md:mt-4 lg:mt-6">
-            <h3>Author name</h3>
+            <h3>{blog.author.authorName}</h3>
           </div>
         </div>
 
-        <div className="pt-14 text-center pb-4">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident
-          praesentium omnis fugiat a. Corrupti molestiae, modi maxime, nemo
-          neque numquam, similique dignissimos eius consectetur aspernatur earum
-          ipsam voluptas velit ipsa. Lorem ipsum dolor sit amet consectetur,
-          adipisicing elit. Cupiditate eos commodi voluptatem ad vitae non
-          culpa. Voluptates error nemo molestias officiis, sit maxime earum amet
-          in cumque fuga corporis quia.
+        <div className="pt-14 pb-4 prose max-w-none prose-li:text-left text-left">
+          <PortableText value={blog.content as any} components={components} />
         </div>
       </div>
     </div>
@@ -37,3 +55,43 @@ const Blog: NextPage = () => {
 };
 
 export default Blog;
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const queryForBlogID = `*[_type == 'blogPost']{
+    _id
+  }`;
+
+  const IDs: { _id: string }[] = await sanityClient.fetch(queryForBlogID);
+
+  const paths = IDs.map((id) => ({
+    params: { id: id._id },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  interface urlQuery extends ParsedUrlQuery {
+    id: string;
+  }
+
+  const { id } = params as urlQuery;
+
+  const queryForBlog = `*[_type == 'blogPost' && _id ==$id ]{
+    author->{authorName},
+  blogDesc,
+  content,
+  date,
+  title,
+  }[0]`;
+  const blog: blogInterface = await sanityClient.fetch(queryForBlog, { id });
+
+  // console.log(blog);
+
+  return {
+    props: { blog },
+  };
+};
