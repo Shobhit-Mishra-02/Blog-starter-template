@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
 import { FiFacebook, FiInstagram, FiGithub, FiTwitter } from "react-icons/fi";
-import { sanityClient } from "../../lib/sanity";
+import { sanityClient, urlFor } from "../../lib/sanity";
 
 interface authorInterface {
   authorIntro: string;
@@ -22,7 +24,10 @@ const About: NextPage<{ authorDetails: authorInterface }> = ({
       {/* intro of the author  */}
 
       <div className="pt-20 px-1 sm:flex sm:justify-center sm:align-middle sm:items-center sm:space-x-2 md:justify-evenly lg:justify-center lg:space-x-12 md:pt-48 ">
-        <div className="w-[300px] h-[300px] mx-auto sm:m-0 sm:max-w-xs rounded-md bg-gray-300 lg:max-w-md xl:max-w-xl"></div>
+        <img
+          src={urlFor(authorDetails.image).url()}
+          className="w-[300px] h-[300px] mx-auto sm:m-0 sm:max-w-xs rounded-md bg-gray-300 lg:max-w-md xl:max-w-xl"
+        ></img>
 
         <div className="sm:max-w-sm lg:max-w-md xl:max-w-xl">
           <h2 className="text-3xl text-center pt-6 pb-4 lg:text-4xl sm:text-left">
@@ -54,9 +59,6 @@ const About: NextPage<{ authorDetails: authorInterface }> = ({
                 <FiTwitter className="w-6 h-6 md:w-8 md:h-8 text-gray-400 hover:text-gray-500 cursor-pointer" />
               </a>
             )}
-
-            {/* <FiInstagram className="w-6 h-6 md:w-8 md:h-8 text-gray-400 hover:text-gray-500 cursor-pointer" />
-            <FiTwitter className="w-6 h-6 md:w-8 md:h-8 text-gray-400 hover:text-gray-500 cursor-pointer" /> */}
           </div>
         </div>
       </div>

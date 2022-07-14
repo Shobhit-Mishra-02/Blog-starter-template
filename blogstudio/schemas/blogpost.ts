@@ -10,6 +10,13 @@ export default {
       description: "Here you need to enter the title of the blog post.",
     },
     {
+      name: "blogImage",
+      title: "Blog main image",
+      type: "image",
+      description:
+        "Here you can put the main image of the blog which is suppose to be on the card. ",
+    },
+    {
       name: "date",
       title: "Date of blog post",
       type: "date",

@@ -12,4 +12,5 @@ export interface blogInterface {
   content: object[];
   date: string;
   title: string;
+  blogImage: object;
 }

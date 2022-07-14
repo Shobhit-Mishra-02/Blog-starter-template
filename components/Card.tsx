@@ -1,14 +1,18 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
+
 import Link from "next/link";
 import { getDate } from "../lib/utilities";
 
-const Card: React.FC<{ date: string; title: string; id: string }> = ({
-  date,
-  title,
-  id,
-}) => {
+const Card: React.FC<{
+  date: string;
+  title: string;
+  id: string;
+  image: string;
+}> = ({ date, title, id, image }) => {
   return (
     <div className="w-[320px] rounded-md shadow-lg m-2 border">
-      <div className="w-full h-[300px] bg-gray-300 rounded-t-md"></div>
+      <img src={image} className="w-full h-[300px] rounded-t-md" />
       <div className="px-2 pt-4 pb-2">
         <h2 className="text-3xl overflow-hidden h-10">{title}</h2>
         <h4 className="text-sm text-gray-500">{getDate(date)}</h4>

@@ -30,12 +30,12 @@ const Blog: NextPage<{ blog: blogInterface }> = ({ blog }) => {
   };
   return (
     <div className="sm:flex sm:justify-center">
-      <div className="divide-y-2 sm:max-w-md md:max-w-xl lg:max-w-3xl xl:max-w-5xl">
-        <div className="mt-12 pb-4 sm:pt-12">
+      <div className="divide-y-2 sm:max-w-md md:max-w-xl lg:max-w-2xl">
+        <div className="mt-12 px-2 pb-4 sm:pt-12">
           <h2 className="text-3xl text-center sm:text-4xl md:pb-4">
             {blog.title}
           </h2>
-          <div className="text-sm text-gray-600 flex justify-end">
+          <div className="text-sm pt-4 text-gray-600 flex justify-end">
             <h4>{getDate(blog.date)}</h4>
           </div>
           <p className="text-gray-500 text-center pt-4 text-sm">
@@ -46,7 +46,7 @@ const Blog: NextPage<{ blog: blogInterface }> = ({ blog }) => {
           </div>
         </div>
 
-        <div className="pt-14 pb-4 prose max-w-none prose-li:text-left text-left">
+        <div className="pt-14 pb-4 prose max-w-none prose-li:text-left text-left prose-img:w-[250px] md:prose-img:w-[400px] prose-img:aspect-square prose-img:mx-auto px-2">
           <PortableText value={blog.content as any} components={components} />
         </div>
       </div>
