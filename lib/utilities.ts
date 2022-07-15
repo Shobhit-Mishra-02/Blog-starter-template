@@ -1,4 +1,5 @@
 export const getDate = (inputString: string) => {
+  if (!inputString) return "";
   const months: string[] = [
     "Jan",
     "Feb",

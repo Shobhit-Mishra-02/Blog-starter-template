@@ -89,7 +89,7 @@ const Blogs: NextPage<{ blogs: blog[]; limit: number; noOfBlogs: number }> = ({
 
         <div className="sm:flex sm:flex-col sm:justify-center sm:items-center sm:align-middle mb-24">
           <div className="mt-12 divide-y-2 sm:max-w-sm md:max-w-xl lg:max-w-3xl">
-            {blogs.map((blog) => (
+            {blogs?.map((blog) => (
               <FlatCard
                 key={blog._id}
                 title={blog.title}

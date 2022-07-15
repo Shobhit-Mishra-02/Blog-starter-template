@@ -15,6 +15,13 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "blogstudio/schemas/author.js",
+    "blogstudio/schemas/blogpost.js",
+    "blogstudio/schemas/headerContent.js"
+  ],
   "exclude": ["node_modules"]
 }

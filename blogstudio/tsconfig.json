@@ -5,7 +5,10 @@
   "include": [
     "./node_modules/@sanity/base/types/**/*.ts",
     "./**/*.ts",
-    "./**/*.tsx"
+    "./**/*.tsx",
+    "schemas/author.ts",
+    "schemas/blogpost.ts",
+    "schemas/headerContent.ts"
   ],
   "compilerOptions": {
     "jsx": "react"
