@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FiX } from "react-icons/fi";
 import { HiMenuAlt3 } from "react-icons/hi";
 
+// This is our navbar and it is a responsive navbar.
 const Navbar: React.FC = () => {
   const [isOpen, setMenuStatus] = useState<boolean>(false);
   return (

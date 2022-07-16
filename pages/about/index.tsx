@@ -3,18 +3,12 @@
 import { NextPage } from "next";
 import { FiFacebook, FiInstagram, FiGithub, FiTwitter } from "react-icons/fi";
 import { sanityClient, urlFor } from "../../lib/sanity";
+import { authorInterface } from "../../interfaces";
 
-interface authorInterface {
-  authorIntro: string;
-  authorName: string;
-  contactStatus: string;
-  email: string;
-  facebookLink: string | null;
-  gitHubLink: string | null;
-  image: object;
-  instaLink: string | null;
-  twitterLink: string | null;
-}
+/*
+About page: where author can put some intro text, so that the world get to know about that
+author and even the author can add some social media links too.
+*/
 
 const About: NextPage<{ authorDetails: authorInterface }> = ({
   authorDetails,

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
+// Whenever we do not get blogs from the headless cms so we just display this component.
 const NoResult = () => {
   return (
     <div className="flex justify-center align-middle items-center flex-col mt-6">

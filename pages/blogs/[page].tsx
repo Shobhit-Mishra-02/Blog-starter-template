@@ -8,19 +8,17 @@ import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Search from "../../components/Search";
+import { flatCardBlogInterface } from "../../interfaces";
 
-interface blog {
-  _id: string;
-  blogDesc: string;
-  date: string;
-  title: string;
-}
+/*
+Blogs paginator: So here I have created a paginator for the blogs and also added a search panel too.
+*/
 
-const Blogs: NextPage<{ blogs: blog[]; limit: number; noOfBlogs: number }> = ({
-  blogs,
-  limit,
-  noOfBlogs,
-}) => {
+const Blogs: NextPage<{
+  blogs: flatCardBlogInterface[];
+  limit: number;
+  noOfBlogs: number;
+}> = ({ blogs, limit, noOfBlogs }) => {
   const router = useRouter();
 
   const [buttonStatus, setButtonStatus] = useState({
@@ -146,7 +144,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     date,
     title,
   }`;
-  const blogs: blog[] = await sanityClient.fetch(query);
+  const blogs: flatCardBlogInterface[] = await sanityClient.fetch(query);
 
   let iter;
   let n = 3;
@@ -188,12 +186,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     date,
   }`;
 
-  const blogs: blog[] = await sanityClient.fetch(queryForBlogs, {
-    lower,
-    higher,
-  });
+  const blogs: flatCardBlogInterface[] = await sanityClient.fetch(
+    queryForBlogs,
+    {
+      lower,
+      higher,
+    }
+  );
 
-  const allBlogs: blog[] = await sanityClient.fetch(queryForAllBlogs);
+  const allBlogs: flatCardBlogInterface[] = await sanityClient.fetch(
+    queryForAllBlogs
+  );
 
   return {
     props: { blogs, noOfBlogs: allBlogs.length, limit: 3 },

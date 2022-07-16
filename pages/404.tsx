@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 
+/* 
+404 page: This page gets render whenever we face the 404 status.
+*/
 const NotFound = () => {
   return (
     <div className="flex justify-center align-middle items-center flex-col mt-32">

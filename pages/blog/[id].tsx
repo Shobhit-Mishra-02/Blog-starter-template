@@ -4,18 +4,13 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { sanityClient, urlFor } from "../../lib/sanity";
 import { getDate } from "../../lib/utilities";
+import { blogPageInterface } from "../../interfaces";
 
-interface blogInterface {
-  author: {
-    authorName: string;
-  };
-  blogDesc: string;
-  content: object[];
-  date: string;
-  title: string;
-}
+/*
+Blog: This the place where your blog post will be displayed.
+*/
 
-const Blog: NextPage<{ blog: blogInterface }> = ({ blog }) => {
+const Blog: NextPage<{ blog: blogPageInterface }> = ({ blog }) => {
   const sampleImageComp: PortableTextBlockComponent = ({ value, isInline }) => {
     return (
       // eslint-disable-next-line jsx-a11y/alt-text
@@ -28,6 +23,7 @@ const Blog: NextPage<{ blog: blogInterface }> = ({ blog }) => {
       image: sampleImageComp,
     },
   };
+
   return (
     <div className="sm:flex sm:justify-center">
       <div className="divide-y-2 sm:max-w-md md:max-w-xl lg:max-w-2xl">
@@ -87,7 +83,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   date,
   title,
   }[0]`;
-  const blog: blogInterface = await sanityClient.fetch(queryForBlog, { id });
+  const blog: blogPageInterface = await sanityClient.fetch(queryForBlog, {
+    id,
+  });
 
   return {
     props: { blog },

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getDate } from "../lib/utilities";
 
+// This flatCard component is to display the details of the blogs on the blog's paginator.
 const FlatCard: React.FC<{
   title: string;
   date: string;

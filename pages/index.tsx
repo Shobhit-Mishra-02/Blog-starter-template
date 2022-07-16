@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
 import Link from "next/link";
@@ -8,6 +8,10 @@ import NoResult from "../components/NoResult";
 import { sanityClient, urlFor } from "../lib/sanity";
 import { landingPageInterface, blogInterface } from "../interfaces";
 import { getDate } from "../lib/utilities";
+
+/* 
+Home page: this is the landing page of your blog.
+*/
 
 const Home: NextPage<{
   content: landingPageInterface;
@@ -115,7 +119,7 @@ const Home: NextPage<{
 
 export default Home;
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const queryForMainContent = `*[_type == 'headerContent']{
     mainHeading,
     blogIntro,

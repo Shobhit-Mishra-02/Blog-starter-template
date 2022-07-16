@@ -2,18 +2,13 @@ import { Dispatch, SetStateAction } from "react";
 import { FiX } from "react-icons/fi";
 import FlatCard from "./FlatCard";
 import { useState, useEffect } from "react";
+import { flatCardBlogInterface } from "../interfaces";
 
-interface blog {
-  _id: string;
-  blogDesc: string;
-  date: string;
-  title: string;
-}
-
+// This is our search panel component
 const Search: React.FC<{
   func: Dispatch<SetStateAction<boolean>>;
 }> = ({ func }) => {
-  const [blogs, setBlogs] = useState([] as blog[]);
+  const [blogs, setBlogs] = useState([] as flatCardBlogInterface[]);
 
   const [searchText, setSearchText] = useState<string>("");
 
@@ -26,10 +21,9 @@ const Search: React.FC<{
       body: JSON.stringify({ searchText, statusTag: 0 }),
     });
 
-    const json: blog[] = await req.json();
+    const json: flatCardBlogInterface[] = await req.json();
 
     setBlogs(json);
-    // console.log("done");
   };
 
   const requestToSearch = async () => {
@@ -42,7 +36,7 @@ const Search: React.FC<{
         body: JSON.stringify({ searchText, statusTag: 1 }),
       });
 
-      const json: blog[] = await req.json();
+      const json: flatCardBlogInterface[] = await req.json();
 
       setBlogs(json);
     }
@@ -50,7 +44,6 @@ const Search: React.FC<{
 
   useEffect(() => {
     if (searchText.length) {
-      // setBlogs(doSearch(searchText, allBlogs));
       requestToSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

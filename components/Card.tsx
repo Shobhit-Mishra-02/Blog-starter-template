@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { getDate } from "../lib/utilities";
 
+//This card component will be displayed on the landing page.
 const Card: React.FC<{
   date: string;
   title: string;

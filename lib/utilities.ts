@@ -1,3 +1,5 @@
+//This function formats the date when if comes from the sanity.
+// example: 2022-07-12(YYYY-MM-DD) -> 12 Jun, 2022
 export const getDate = (inputString: string) => {
   if (!inputString) return "";
   const months: string[] = [
@@ -17,54 +19,7 @@ export const getDate = (inputString: string) => {
   let res = "";
   const arr: string[] = inputString.split("-");
   const index = +arr[1];
-  res += arr[2] + " " + months[index] + ", " + arr[0]; //12 Jun, 2022
+  res += arr[2] + " " + months[index] + ", " + arr[0];
 
   return res;
 };
-
-// const getPages = (blogs: blog[], n: number) => {
-//   let iter: number;
-
-//   if (blogs.length % n == 0) iter = blogs.length / n;
-//   else iter = blogs.length / n + 1;
-
-//   let partition = iter;
-//   let res = [];
-//   let low = 0,
-//     high = iter;
-//   let pos = 1;
-
-//   while (iter--) {
-//     let temp: blog[] = [];
-
-//     for (let i = low; i < high; i++) temp.push(blogs[i]);
-
-//     low = high;
-//     high += partition;
-//     if (high > blogs.length) high = blogs.length;
-
-//     if (pos == 1) {
-//       res.push({
-//         blogs: temp,
-//         next: true,
-//         prev: false,
-//       });
-//     } else if (pos == blogs.length) {
-//       res.push({
-//         blogs: temp,
-//         next: false,
-//         prev: true,
-//       });
-//     } else {
-//       res.push({
-//         blogs: temp,
-//         next: true,
-//         prev: true,
-//       });
-//     }
-
-//     pos++;
-//   }
-
-//   return res;
-// };
