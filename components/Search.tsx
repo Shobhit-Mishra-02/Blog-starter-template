@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import { FiX } from "react-icons/fi";
 import FlatCard from "./FlatCard";
 import { useState, useEffect } from "react";
-import NoResult from "./NoResult";
 
 interface blog {
   _id: string;
@@ -15,6 +14,7 @@ const Search: React.FC<{
   func: Dispatch<SetStateAction<boolean>>;
 }> = ({ func }) => {
   const [blogs, setBlogs] = useState([] as blog[]);
+
   const [searchText, setSearchText] = useState<string>("");
 
   const requestForBlogs = async () => {
@@ -29,6 +29,7 @@ const Search: React.FC<{
     const json: blog[] = await req.json();
 
     setBlogs(json);
+    // console.log("done");
   };
 
   const requestToSearch = async () => {
@@ -49,12 +50,16 @@ const Search: React.FC<{
 
   useEffect(() => {
     if (searchText.length) {
+      // setBlogs(doSearch(searchText, allBlogs));
       requestToSearch();
-    } else {
-      requestForBlogs();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText]);
+
+  useEffect(() => {
+    requestForBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="fixed top-0 bottom-0 w-full flex justify-center align-middle items-center z-20">

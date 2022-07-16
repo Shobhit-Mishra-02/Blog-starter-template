@@ -30,13 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       res.send(blogs);
     }
-
-    res.send({ searchText, statusTag });
   }
-
-  res.send({
-    messag: "worong req",
-  });
 };
 
 export default handler;
