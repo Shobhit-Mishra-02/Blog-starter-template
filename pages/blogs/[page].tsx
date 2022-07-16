@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Search from "../../components/Search";
 
 interface blog {
   _id: string;
@@ -26,6 +27,8 @@ const Blogs: NextPage<{ blogs: blog[]; limit: number; noOfBlogs: number }> = ({
     next: true,
     prev: false,
   });
+
+  const [searchDisplay, setSearchDisplay] = useState(false);
 
   const paginatorDisplay = () => {
     const pos = parseInt(router.query.page as string);
@@ -65,7 +68,7 @@ const Blogs: NextPage<{ blogs: blog[]; limit: number; noOfBlogs: number }> = ({
 
   useEffect(() => {
     paginatorDisplay();
-    console.log(buttonStatus);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
 
@@ -76,10 +79,13 @@ const Blogs: NextPage<{ blogs: blog[]; limit: number; noOfBlogs: number }> = ({
           className="border-2 rounded-l-md text-xl px-2 py-1 border-black w-[250px] sm:w-[300px] focus:outline-none"
           type="text"
           placeholder="Search..."
+          readOnly
+          onClick={() => setSearchDisplay(true)}
         />
         <button className="px-4 py-2 sm:py-1 rounded-r-md bg-black">
           <BiSearch className="text-white w-6 h-6 sm:w-8 sm:h-8" />
         </button>
+        {searchDisplay && <Search func={setSearchDisplay} />}
       </div>
 
       <div>
@@ -103,7 +109,7 @@ const Blogs: NextPage<{ blogs: blog[]; limit: number; noOfBlogs: number }> = ({
           <div
             className={`flex justify-between align-middle items-center w-full sm:max-w-sm md:max-w-xl lg:max-w-3xl mt-14`}
           >
-            {buttonStatus.prev && (
+            {buttonStatus.prev ? (
               <Link
                 href={`/blogs/${parseInt(router.query.page as string) - 1}`}
               >
@@ -111,6 +117,8 @@ const Blogs: NextPage<{ blogs: blog[]; limit: number; noOfBlogs: number }> = ({
                   <AiOutlineArrowLeft className="w-6 h-6" />
                 </a>
               </Link>
+            ) : (
+              <div className="w-[150px] bg-white rounded-md px-4 py-1 h-[20px]"></div>
             )}
 
             {buttonStatus.next && (
