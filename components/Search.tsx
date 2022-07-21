@@ -3,6 +3,7 @@ import { FiX } from "react-icons/fi";
 import FlatCard from "./FlatCard";
 import { useState, useEffect } from "react";
 import { flatCardBlogInterface } from "../interfaces";
+import NoResult from "./NoResult";
 
 // This is our search panel component
 const Search: React.FC<{
@@ -73,15 +74,19 @@ const Search: React.FC<{
         </div>
 
         <div className="h-[400px] lg:h-[500px] overflow-auto">
-          {blogs?.map((blog) => (
-            <FlatCard
-              key={blog._id}
-              title={blog.title}
-              date={blog.date}
-              desc={blog.blogDesc}
-              id={blog._id}
-            />
-          ))}
+          {blogs?.length ? (
+            blogs?.map((blog) => (
+              <FlatCard
+                key={blog._id}
+                title={blog.title}
+                date={blog.date}
+                desc={blog.blogDesc}
+                id={blog._id}
+              />
+            ))
+          ) : (
+            <NoResult />
+          )}
         </div>
       </div>
     </div>

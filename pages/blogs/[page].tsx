@@ -8,6 +8,7 @@ import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Search from "../../components/Search";
+import NoResult from "../../components/NoResult";
 import { flatCardBlogInterface } from "../../interfaces";
 
 /*
@@ -90,46 +91,51 @@ const Blogs: NextPage<{
         <h2 className="text-3xl text-center mt-10 sm:text-4xl sm:mt-12 md:mt-20 lg:mt-28 xl:mt-36 xl:text-5xl">
           All blogs
         </h2>
+        {blogs?.length ? (
+          <div className="sm:flex sm:flex-col sm:justify-center sm:items-center sm:align-middle mb-24">
+            <div className="mt-12 divide-y-2 sm:max-w-sm md:max-w-xl lg:max-w-3xl">
+              {blogs?.map((blog) => (
+                <FlatCard
+                  key={blog._id}
+                  title={blog.title}
+                  desc={blog.blogDesc}
+                  date={blog.date}
+                  id={blog._id}
+                />
+              ))}
+            </div>
 
-        <div className="sm:flex sm:flex-col sm:justify-center sm:items-center sm:align-middle mb-24">
-          <div className="mt-12 divide-y-2 sm:max-w-sm md:max-w-xl lg:max-w-3xl">
-            {blogs?.map((blog) => (
-              <FlatCard
-                key={blog._id}
-                title={blog.title}
-                desc={blog.blogDesc}
-                date={blog.date}
-                id={blog._id}
-              />
-            ))}
+            <div
+              className={`flex justify-between align-middle items-center w-full sm:max-w-sm md:max-w-xl lg:max-w-3xl mt-14`}
+            >
+              {buttonStatus.prev ? (
+                <Link
+                  href={`/blogs/${parseInt(router.query.page as string) - 1}`}
+                >
+                  <a className="text-xl text-black bg-white border border-black hover:bg-black hover:text-white rounded-md px-4 py-1">
+                    <AiOutlineArrowLeft className="w-6 h-6" />
+                  </a>
+                </Link>
+              ) : (
+                <div className="w-[150px] bg-white rounded-md px-4 py-1 h-[20px]"></div>
+              )}
+
+              {buttonStatus.next && (
+                <Link
+                  href={`/blogs/${parseInt(router.query.page as string) + 1}`}
+                >
+                  <a className="text-xl text-black bg-white border border-black hover:bg-black hover:text-white rounded-md px-4 py-1">
+                    <AiOutlineArrowRight className="w-6 h-6" />
+                  </a>
+                </Link>
+              )}
+            </div>
           </div>
-
-          <div
-            className={`flex justify-between align-middle items-center w-full sm:max-w-sm md:max-w-xl lg:max-w-3xl mt-14`}
-          >
-            {buttonStatus.prev ? (
-              <Link
-                href={`/blogs/${parseInt(router.query.page as string) - 1}`}
-              >
-                <a className="text-xl text-black bg-white border border-black hover:bg-black hover:text-white rounded-md px-4 py-1">
-                  <AiOutlineArrowLeft className="w-6 h-6" />
-                </a>
-              </Link>
-            ) : (
-              <div className="w-[150px] bg-white rounded-md px-4 py-1 h-[20px]"></div>
-            )}
-
-            {buttonStatus.next && (
-              <Link
-                href={`/blogs/${parseInt(router.query.page as string) + 1}`}
-              >
-                <a className="text-xl text-black bg-white border border-black hover:bg-black hover:text-white rounded-md px-4 py-1">
-                  <AiOutlineArrowRight className="w-6 h-6" />
-                </a>
-              </Link>
-            )}
+        ) : (
+          <div>
+            <NoResult />
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
