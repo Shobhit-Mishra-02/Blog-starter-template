@@ -85,7 +85,7 @@ const Search: React.FC<{
               />
             ))
           ) : (
-            <NoResult />
+            <NoResult text="Not found" />
           )}
         </div>
       </div>

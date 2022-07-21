@@ -133,7 +133,7 @@ const Blogs: NextPage<{
           </div>
         ) : (
           <div>
-            <NoResult />
+            <NoResult text="add some blogs" />
           </div>
         )}
       </div>

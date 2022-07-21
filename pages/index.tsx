@@ -37,12 +37,14 @@ const Home: NextPage<{
             alt="img"
           />
           <div className="pt-6 md:max-w-sm lg:max-w-md xl:max-w-xl">
-            <h3 className="text-5xl font-bold py-2 text-center md:text-left lg:text-6xl xl:text-7xl">
-              {content.mainHeading}
-            </h3>
-            <p className="text-gray-500 text-center pt-6 md:text-left lg:text-sm">
-              {content.blogIntro}
-            </p>
+            <div>
+              <h3 className="text-5xl font-bold py-2 text-center md:text-left lg:text-6xl xl:text-7xl">
+                {content.mainHeading}
+              </h3>
+              <p className="text-gray-500 text-center pt-6 md:text-left lg:text-sm">
+                {content.blogIntro}
+              </p>
+            </div>
 
             <div className="flex justify-center align-middle items-center pt-6 pb-2 md:justify-start lg:pt-12">
               <Link href={"/blogs/1"}>
@@ -84,7 +86,7 @@ const Home: NextPage<{
             </div>
           ) : (
             <div>
-              <NoResult />
+              <NoResult text="add blogs" />
             </div>
           )}
 
@@ -107,7 +109,7 @@ const Home: NextPage<{
               ))
             ) : (
               <div>
-                <NoResult />
+                <NoResult text="add blogs" />
               </div>
             )}
           </div>
@@ -119,7 +121,7 @@ const Home: NextPage<{
 
 export default Home;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps = async () => {
   const queryForMainContent = `*[_type == 'headerContent']{
     mainHeading,
     blogIntro,
@@ -140,6 +142,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const content: landingPageInterface = await sanityClient.fetch(
     queryForMainContent
   );
+
   const blogs: blogInterface[] = await sanityClient.fetch(queryForBlogs);
 
   return {
