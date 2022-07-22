@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
           </Link>
 
           <div className="list-none text flex justify-center align-middle items-center space-x-6 lg:space-x-8 xl:space-x-12 xl:text-xl">
-            <Link href={"/blogs/1"}>
+            <Link href={"/blogs"}>
               <a className="cursor-pointer hover:text-gray-600">Blogs</a>
             </Link>
             <Link href={"/about"}>
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
             </Link>
           </li>
           <li className="px-2">
-            <Link href={"/blogs/1"}>
+            <Link href={"/blogs"}>
               <a>Blogs</a>
             </Link>
           </li>

@@ -5,12 +5,34 @@ import { ParsedUrlQuery } from "querystring";
 import { sanityClient, urlFor } from "../../lib/sanity";
 import { getDate } from "../../lib/utilities";
 import { blogPageInterface } from "../../interfaces";
+import { usePreview } from "../../lib/sanity";
+import { useRouter } from "next/router";
 
 /*
 Blog: This the place where your blog post will be displayed.
 */
 
-const Blog: NextPage<{ blog: blogPageInterface }> = ({ blog }) => {
+const queryForBlog = `*[_type == 'blogPost' && _id ==$id ]{
+    author->{authorName},
+  blogDesc,
+  content,
+  date,
+  title,
+  }[0]`;
+
+const Blog: NextPage<{
+  data: blogPageInterface;
+  preview: boolean;
+  id: string;
+}> = ({ data, preview, id }) => {
+  const router = useRouter();
+
+  const { data: blog } = usePreview(queryForBlog, {
+    enabled: preview,
+    params: { id: router.query.id },
+    initialData: data,
+  });
+
   const sampleImageComp: PortableTextBlockComponent = ({ value, isInline }) => {
     return (
       // eslint-disable-next-line jsx-a11y/alt-text
@@ -69,25 +91,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = true,
+}) => {
   interface urlQuery extends ParsedUrlQuery {
     id: string;
   }
 
   const { id } = params as urlQuery;
 
-  const queryForBlog = `*[_type == 'blogPost' && _id ==$id ]{
-    author->{authorName},
-  blogDesc,
-  content,
-  date,
-  title,
-  }[0]`;
-  const blog: blogPageInterface = await sanityClient.fetch(queryForBlog, {
+  const data: blogPageInterface = await sanityClient.fetch(queryForBlog, {
     id,
   });
 
   return {
-    props: { blog },
+    props: { data, preview: true, id },
   };
 };

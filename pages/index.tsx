@@ -47,7 +47,7 @@ const Home: NextPage<{
             </div>
 
             <div className="flex justify-center align-middle items-center pt-6 pb-2 md:justify-start lg:pt-12">
-              <Link href={"/blogs/1"}>
+              <Link href={"/blogs"}>
                 <a className="text-xl text-white px-8 py-2 rounded-md bg-black">
                   Blogs
                 </a>
