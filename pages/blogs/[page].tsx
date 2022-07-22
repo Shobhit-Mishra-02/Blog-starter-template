@@ -19,7 +19,8 @@ const Blogs: NextPage<{
   blogs: flatCardBlogInterface[];
   limit: number;
   noOfBlogs: number;
-}> = ({ blogs, limit, noOfBlogs }) => {
+  preview: boolean;
+}> = ({ blogs, limit, noOfBlogs, preview }) => {
   const router = useRouter();
 
   const [buttonStatus, setButtonStatus] = useState({
@@ -168,7 +169,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   interface urlQuery extends ParsedUrlQuery {
     page: string;
   }
@@ -205,6 +209,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   );
 
   return {
-    props: { blogs, noOfBlogs: allBlogs.length, limit: 3 },
+    props: { blogs, noOfBlogs: allBlogs.length, limit: 3, preview },
   };
 };
