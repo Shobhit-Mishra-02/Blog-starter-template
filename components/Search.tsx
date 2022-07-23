@@ -38,11 +38,7 @@ const Search: React.FC<{
     });
 
     const json: flatCardBlogInterface[] = await req.json();
-
-    // const blogs: flatCardBlogInterface[] = filter(json);
-    // console.log(blogs.length);
-
-    setBlogs(filter(blogs));
+    setBlogs(filter(json));
   };
 
   const requestToSearch = async () => {

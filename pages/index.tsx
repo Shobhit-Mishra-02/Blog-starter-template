@@ -13,6 +13,18 @@ import { getDate } from "../lib/utilities";
 Home page: this is the landing page of your blog.
 */
 
+const filter = (blogs: blogInterface[]) => {
+  let res: blogInterface[] = [];
+
+  blogs.forEach((blog) => {
+    if (!blog._id.startsWith("drafts.")) {
+      res.push(blog);
+    }
+  });
+
+  return res;
+};
+
 const Home: NextPage<{
   content: landingPageInterface;
   blogs: blogInterface[];
@@ -143,7 +155,8 @@ export const getServerSideProps = async () => {
     queryForMainContent
   );
 
-  const blogs: blogInterface[] = await sanityClient.fetch(queryForBlogs);
+  const blogsData: blogInterface[] = await sanityClient.fetch(queryForBlogs);
+  const blogs = filter(blogsData);
 
   return {
     props: { content, blogs },
