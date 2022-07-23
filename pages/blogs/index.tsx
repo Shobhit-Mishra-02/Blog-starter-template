@@ -1,24 +1,19 @@
-import { GetStaticPaths } from "next";
-import { useState, useEffect } from "react";
-import Search from "../../components/Search";
-import { BiSearch } from "react-icons/bi";
-import NoResult from "../../components/NoResult";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import FlatCard from "../../components/FlatCard";
+import { GetServerSideProps, NextPage } from "next";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { BiSearch } from "react-icons/bi";
+import FlatCard from "../../components/FlatCard";
+import NoResult from "../../components/NoResult";
+import Search from "../../components/Search";
 import { flatCardBlogInterface } from "../../interfaces";
-import { sanityClient, usePreview } from "../../lib/sanity";
-import { NextPage } from "next";
+import { sanityClient } from "../../lib/sanity";
+import { pageIndex } from "../../lib/utilities";
 
-const queryForBlogs = `*[_type=="blogPost"]{
-  _id,
-  title,
-  blogDesc,
-  date,
-}
-`;
+/*
+Blogs page: Here the view can see all the blogs and also use the search panel to do search.
+*/
 
+// this function returns those blog posts which are not in drated mode.
 const filter = (blogs: flatCardBlogInterface[]) => {
   let res: flatCardBlogInterface[] = [];
 
@@ -31,36 +26,19 @@ const filter = (blogs: flatCardBlogInterface[]) => {
   return res;
 };
 
-const pageIndex = (
-  noOfBlogs: number,
-  pageNo: number,
-  blogSetNumber: number
-) => {
-  let index: number[] = [];
-
-  let lower = pageNo * blogSetNumber - blogSetNumber;
-  let upper = pageNo * blogSetNumber;
-
-  for (let i = lower; i < upper; i++) {
-    if (i < noOfBlogs) index.push(i);
-  }
-
-  return index;
-};
-
-interface propsInterface {
-  blogs: flatCardBlogInterface[];
-}
-
-const Page: NextPage<propsInterface> = ({ blogs }) => {
-  const [pageNo, setPageNo] = useState(1);
-  const noOfBlogsToDisplay = 3;
-  const [searchDisplay, setSearchDisplay] = useState(false);
-  const [buttonStatus, setButtonStatus] = useState({
+const Page: NextPage<{ blogs: flatCardBlogInterface[] }> = ({ blogs }) => {
+  const [pageNo, setPageNo] = useState<number>(1);
+  const noOfBlogsToDisplay: number = 3; // This denotes the no. of pages to display on each slide.
+  const [searchDisplay, setSearchDisplay] = useState<boolean>(false);
+  const [buttonStatus, setButtonStatus] = useState<{
+    next: boolean;
+    prev: boolean;
+  }>({
     next: true,
     prev: false,
   });
 
+  // This function handles the paginator buttons.
   const paginator = (blogSetNumber: number) => {
     let totalBlogs = blogs.length;
     let noOfPages = 0;
@@ -99,6 +77,7 @@ const Page: NextPage<propsInterface> = ({ blogs }) => {
     index = pageIndex(blogs.length, pageNo, 3);
   };
 
+  // This function handles to go to the next page index.
   const goNextPage = (blogSetNumber: number) => {
     let noOfPages = 0;
     let totalBlogs = blogs.length;
@@ -113,6 +92,7 @@ const Page: NextPage<propsInterface> = ({ blogs }) => {
     }
   };
 
+  // This function handles to go back to prev page index.
   const goPrevPage = (blogSetNumber: number) => {
     let noOfPages = 0;
     let totalBlogs = blogs.length;
@@ -213,10 +193,20 @@ const Page: NextPage<propsInterface> = ({ blogs }) => {
 
 export default Page;
 
-export const getServerSideProps = async () => {
-  const data: flatCardBlogInterface[] = await sanityClient.fetch(queryForBlogs);
+export const getServerSideProps: GetServerSideProps = async () => {
+  const queryForBlogs = `*[_type=="blogPost"]{
+    _id,
+    title,
+    blogDesc,
+    date,
+  }
+  `;
 
-  const blogs = filter(data);
+  const blogsData: flatCardBlogInterface[] = await sanityClient.fetch(
+    queryForBlogs
+  );
+
+  const blogs = filter(blogsData);
 
   return {
     props: { blogs },

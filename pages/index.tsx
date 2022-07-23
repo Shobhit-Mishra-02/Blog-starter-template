@@ -1,18 +1,19 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Card from "../components/Card";
 import Link from "next/link";
+import Card from "../components/Card";
 import NoResult from "../components/NoResult";
+import { blogInterface, landingPageInterface } from "../interfaces";
 import { sanityClient, urlFor } from "../lib/sanity";
-import { landingPageInterface, blogInterface } from "../interfaces";
 import { getDate } from "../lib/utilities";
 
 /* 
 Home page: this is the landing page of your blog.
 */
 
+// this function filters the blogs and returns only those blogs which are not drafted.
 const filter = (blogs: blogInterface[]) => {
   let res: blogInterface[] = [];
 
@@ -133,7 +134,7 @@ const Home: NextPage<{
 
 export default Home;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const queryForMainContent = `*[_type == 'headerContent']{
     mainHeading,
     blogIntro,

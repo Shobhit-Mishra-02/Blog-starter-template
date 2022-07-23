@@ -23,3 +23,21 @@ export const getDate = (inputString: string) => {
 
   return res;
 };
+
+// This function return the desired no. of array, which denots the index of blog array.
+export const pageIndex = (
+  noOfBlogs: number,
+  pageNo: number,
+  blogSetNumber: number
+) => {
+  let index: number[] = [];
+
+  let lower = pageNo * blogSetNumber - blogSetNumber;
+  let upper = pageNo * blogSetNumber;
+
+  for (let i = lower; i < upper; i++) {
+    if (i < noOfBlogs) index.push(i);
+  }
+
+  return index;
+};

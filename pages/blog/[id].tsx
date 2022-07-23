@@ -20,11 +20,12 @@ const queryForBlog = `*[_type == 'blogPost' && _id ==$id ]{
   title,
   }[0]`;
 
-const Blog: NextPage<{
+type props = {
   data: blogPageInterface;
   preview: boolean;
-  id: string;
-}> = ({ data, preview, id }) => {
+};
+
+const Blog: NextPage<props> = ({ data, preview }) => {
   const router = useRouter();
 
   const { data: blog } = usePreview(queryForBlog, {
@@ -91,10 +92,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({
-  params,
-  preview = true,
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   interface urlQuery extends ParsedUrlQuery {
     id: string;
   }
@@ -106,6 +104,6 @@ export const getStaticProps: GetStaticProps = async ({
   });
 
   return {
-    props: { data, preview: true, id },
+    props: { data, preview: true },
   };
 };

@@ -1,28 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import { NextPage } from "next";
-import { FiFacebook, FiInstagram, FiGithub, FiTwitter } from "react-icons/fi";
-import { sanityClient, urlFor } from "../../lib/sanity";
-import { authorInterface } from "../../interfaces";
+import { GetServerSideProps, NextPage } from "next";
+import { FiFacebook, FiGithub, FiInstagram, FiTwitter } from "react-icons/fi";
 import NoResult from "../../components/NoResult";
-import { usePreview } from "../../lib/sanity";
+import { authorInterface } from "../../interfaces";
+import { sanityClient, urlFor } from "../../lib/sanity";
 
 /*
 About page: where author can put some intro text, so that the world get to know about that
 author and even the author can add some social media links too.
 */
-
-const queryForAuthor = `*[_type == 'authorDetails']{
-  authorIntro,
-  authorName,
-  contactStatus,
-  email,
-  facebookLink,
-  gitHubLink,
-  image,
-  instaLink,
-  twitterLink
-}[0]`;
 
 const About: NextPage<{ authorDetails: authorInterface }> = ({
   authorDetails,
@@ -102,7 +89,19 @@ const About: NextPage<{ authorDetails: authorInterface }> = ({
 
 export default About;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const queryForAuthor = `*[_type == 'authorDetails']{
+    authorIntro,
+    authorName,
+    contactStatus,
+    email,
+    facebookLink,
+    gitHubLink,
+    image,
+    instaLink,
+    twitterLink
+  }[0]`;
+
   const authorDetails: authorInterface = await sanityClient.fetch(
     queryForAuthor
   );
