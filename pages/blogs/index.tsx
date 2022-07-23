@@ -22,16 +22,13 @@ const queryForBlogs = `*[_type=="blogPost"]{
 const filter = (blogs: flatCardBlogInterface[]) => {
   let res: flatCardBlogInterface[] = [];
 
-  if (blogs.length) {
-    blogs.forEach((blog) => {
-      if (blog._id.startsWith("drafts.")) {
-      } else res.push(blog);
-    });
+  blogs.forEach((blog) => {
+    if (!blog._id.startsWith("drafts.")) {
+      res.push(blog);
+    }
+  });
 
-    // console.log(res);
-
-    return res;
-  } else return res;
+  return res;
 };
 
 const pageIndex = (
@@ -52,19 +49,10 @@ const pageIndex = (
 };
 
 interface propsInterface {
-  data: flatCardBlogInterface[];
-  preview: boolean;
+  blogs: flatCardBlogInterface[];
 }
 
-const Page: NextPage<propsInterface> = ({ data, preview }) => {
-  const { data: previewBlogs } = usePreview(queryForBlogs, {
-    enabled: preview,
-    initialData: data,
-    params: {},
-  });
-
-  const blogs: flatCardBlogInterface[] = filter(previewBlogs);
-
+const Page: NextPage<propsInterface> = ({ blogs }) => {
   const [pageNo, setPageNo] = useState(1);
   const noOfBlogsToDisplay = 3;
   const [searchDisplay, setSearchDisplay] = useState(false);
@@ -80,9 +68,7 @@ const Page: NextPage<propsInterface> = ({ data, preview }) => {
     if (totalBlogs % blogSetNumber == 0) noOfPages = totalBlogs / blogSetNumber;
     else noOfPages = totalBlogs / blogSetNumber + 1;
 
-    noOfPages = Math.round(noOfPages);
-
-    // console.log(noOfPages);
+    noOfPages = Math.trunc(noOfPages);
 
     if (noOfPages == 1) {
       setButtonStatus({
@@ -148,7 +134,6 @@ const Page: NextPage<propsInterface> = ({ data, preview }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNo]);
-  const router = useRouter();
 
   return (
     <div>
@@ -228,14 +213,12 @@ const Page: NextPage<propsInterface> = ({ data, preview }) => {
 
 export default Page;
 
-export const getStaticProps = async () => {
-  const blogs: flatCardBlogInterface[] = await sanityClient.fetch(
-    queryForBlogs
-  );
+export const getServerSideProps = async () => {
+  const data: flatCardBlogInterface[] = await sanityClient.fetch(queryForBlogs);
 
-  const data = filter(blogs) as flatCardBlogInterface[];
+  const blogs = filter(data);
 
   return {
-    props: { data, preview: true },
+    props: { blogs },
   };
 };

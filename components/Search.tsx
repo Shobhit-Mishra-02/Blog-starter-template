@@ -5,6 +5,21 @@ import { useState, useEffect } from "react";
 import { flatCardBlogInterface } from "../interfaces";
 import NoResult from "./NoResult";
 
+const filter = (blogs: flatCardBlogInterface[]) => {
+  let res: flatCardBlogInterface[] = [];
+
+  if (blogs.length) {
+    blogs.forEach((blog) => {
+      if (blog._id.startsWith("drafts.")) {
+      } else res.push(blog);
+    });
+
+    // console.log(res);
+
+    return res;
+  } else return res;
+};
+
 // This is our search panel component
 const Search: React.FC<{
   func: Dispatch<SetStateAction<boolean>>;
@@ -24,7 +39,10 @@ const Search: React.FC<{
 
     const json: flatCardBlogInterface[] = await req.json();
 
-    setBlogs(json);
+    // const blogs: flatCardBlogInterface[] = filter(json);
+    // console.log(blogs.length);
+
+    setBlogs(filter(blogs));
   };
 
   const requestToSearch = async () => {
@@ -39,7 +57,7 @@ const Search: React.FC<{
 
       const json: flatCardBlogInterface[] = await req.json();
 
-      setBlogs(json);
+      setBlogs(filter(json));
     }
   };
 
