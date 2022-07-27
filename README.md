@@ -10,7 +10,7 @@ Here I have developed a blog project where the I have added a lot of features li
 - Blogs display page with paginator.
 - Sanity as a backend database.
 
-# Prerequisites
+## Prerequisites
 
 - React js
 - Tailwind css
